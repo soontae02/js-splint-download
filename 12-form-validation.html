@@ -143,7 +143,90 @@
         // - 비밀번호: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         // - classList.add('error'), classList.remove('error') 사용
         // - error-message 요소의 display 스타일 조작
+
+
+        let usernameValid = /^[a-zA-Z0-9_]{3,20}$/;
+
+        let signupForm = document.getElementById("signupForm");
+        signupForm.username.addEventListener("input", (e) => {
+
+            let usernameError = document.getElementById("username-error");
+
+            if ( usernameValid.test( e.target.value ) ) {
+                e.target.classList.add("success");
+                e.target.classList.remove("error");
+                usernameError.style.display = "none";
+            } else {
+                e.target.classList.add("error");
+                e.target.classList.remove("success");
+                usernameError.style.display = "block";
+                usernameError.innerHTML = "사용자명은 3~20자 영문, 숫자, 언더스코어만 가능합니다"
+            }
+        });
+
+
+        let emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        signupForm.email.addEventListener("input", (e) => {
+
+            let emailError = document.getElementById("email-error");
+
+            if ( emailValid.test( e.target.value ) ) {
+                e.target.classList.add("success");
+                e.target.classList.remove("error");
+                emailError.style.display = "none";
+            } else {
+                e.target.classList.add("error");
+                e.target.classList.remove("success");
+                emailError.style.display = "block";
+                emailError.innerHTML = "이메일 형식으로 입력해주세요"
+            }
+        });
+
+
+        let passwordValid = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
         
+        signupForm.password.addEventListener("input", (e) => {
+
+            let passwordError = document.getElementById("password-error");
+            
+            if ( passwordValid.test( e.target.value ) ) {
+                e.target.classList.add("success");
+                e.target.classList.remove("error");
+                passwordError.style.display = "none";
+            } else {
+                e.target.classList.add("error");
+                e.target.classList.remove("success")
+                passwordError.style.display = "block";
+                passwordError.innerHTML = "비밀번호는 8자 이상, 영문, 숫자, 특수문자를 포함해야 합니다"
+            }
+        });
+
+
+        let confirmPassword = document.getElementById("confirmPassword-error");
+
+        signupForm.confirmPassword.addEventListener("input", (e) => {
+            const confirmError = document.getElementById("confirmPassword-error");
+            if(e.target.value === signupForm.password.value) {
+                e.target.classList.add("success");
+                e.target.classList.remove("error");
+                confirmError.style.display = "none";
+            } else {
+                e.target.classList.add("error");
+                e.target.classList.remove("success");
+                confirmError.style.display = "block";
+                confirmError.textContent = "비밀번호가 일치하지 않습니다";
+            }
+        });
+
+        let submit = document.getElementById("submitBtn");
+        submit.onclick = function() {
+            event.preventDefault();
+
+            if(numberValid) {
+                document.signupForm.submit();
+            } 
+        }
     </script>
 </body>
 </html>
